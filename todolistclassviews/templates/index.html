@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <title>Local Library</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+          <div class="container-fluid">
+              <a class="navbar-brand">{% block name %} {% endblock %}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menü</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url "hometodo"%}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "alltodos"%}">Alle To-Dos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "grouplist"%}">To-Do-Listen</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "global"%}">Öffentliche ToDos</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="btn-group" role="group">
+                                <a id="btnGroupDrop1" class="nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <p class="nav-link">Dein Acc: {{ user.username }}</p>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><a class="dropdown-item" href="{% url "changepw"%}">Passwort ändern</a></li>
+                                    <li><a class="dropdown-item" href="{% url "changeprofile" user.id %}">Profil ändern</a></li>
+                                    <li><a class="dropdown-item" href="/logout">Abmelden</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url "homeregin"%}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "registration"%}">Registrieren</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url "login"%}">Anmelden</a>
+                        </li>
+                    {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+
+        <center>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {% block content %}
+
+            {% endblock %}
+        </center>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+

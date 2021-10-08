@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+
+{% block name %}Alle Todos{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for item in items %}
+            {% if item.user.username == request.user.username %}
+                <div class="card w-75">
+                  <div class="card-body">
+                      <div class="btn-group" role="group">
+                        <a id="btnGroupDrop1" class="card-title" data-bs-toggle="dropdown" aria-expanded="false">
+                          <h5 class="card-title">{{ item.title }}</h5>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                          <li><a class="dropdown-item" href="{% url 'deleteitem' item.id %}">Löschen</a></li>
+                          <li><a class="dropdown-item" href="{% url 'update' item.id %}">Bearbeiten</a></li>
+                          {% if item.status == True %}
+                              <li><a class="dropdown-item" href="{% url 'complete' item.id %}">Erledigt</a></li>
+                          {% else %}
+                              <li><a class="dropdown-item" href="{% url 'complete' item.id %}">Nicht Erledigt</a></li>
+                          {% endif %}
+                          <li><a class="dropdown-item" href="{% url 'shareitem' item.id %}">Teilen</a></li>
+                        </ul>
+                      </div>
+                      {% if item.status == True %}
+                          <p class="card-text">{{ item.description }} (Erledigt)</p>
+                      {% else %}
+                          <p class="card-text">{{ item.description }}</p>
+                      {% endif %}
+                      {% if item.visibility == 'privat' %}
+                          <p class="card-text">(Privat)</p>
+                      {% else %}
+                          <p class="card-text">(Global)</p>
+                      {% endif %}
+                  </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" value="ToDo Item speichern">
+    </form>
+{% endblock %}

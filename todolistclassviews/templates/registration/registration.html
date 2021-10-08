@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block name %}Registrieren{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <p>Sie sind schon eingelock, zur Startseite: <a href="{% url "hometodo"%}">Startseite</a></p>
+    <p>Auslogen: <a href="/logout">Ausloggen</a></p>
+{% else %}
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center form_container">
+					<form method="POST" action="">
+						{% csrf_token %}
+						{{ form|crispy }}
+						<div class="d-flex justify-content-center mt-3 login_container">
+							<input class="btn btn-outline-primary" type="submit" value="Registrieren">
+						</div>
+					</form>
+				</div>
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Hast du einen Accont? <a href="/login" class="ml-2">Anmelden</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Benutzername..';
+		form_fields[2].placeholder='Email..';
+		form_fields[3].placeholder='Passwort...';
+		form_fields[4].placeholder='Passwort wiederholen...';
+
+
+		for (var field in form_fields){
+			form_fields[field].className += ' form-control'
+		}
+	</script>
+
+{% endif %}
+{% endblock %}
+

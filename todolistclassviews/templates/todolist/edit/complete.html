@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block name %}Erledigen{% endblock %}
+
+{% block content %}
+    <p>Erledigt?</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <a class="btn btn-outline-primary" href="{% url "alltodos"%}">Zurück</a>
+        <input type="submit" class="btn btn-outline-primary" value="Update">
+    </form>
+{% endblock %}

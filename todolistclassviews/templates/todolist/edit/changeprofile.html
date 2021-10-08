@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block name %}Profil{% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center form_container">
+					<form method="POST" action="">
+						{% csrf_token %}
+						{{ form|crispy }}
+						<div class="d-flex justify-content-center mt-3 login_container">
+							<input class="btn btn-outline-primary" type="submit" value="Daten ändern">
+						</div>
+						<a class="btn btn-outline-primary" href="{% url "hometodo"%}">Zurück</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Username..';
+		form_fields[2].placeholder='Vorname...';
+		form_fields[3].placeholder='Nachname...';
+		form_fields[4].placeholder='Email...';
+
+
+		for (var field in form_fields){
+			form_fields[field].className += ' form-control'
+		}
+	</script>
+{% endblock %}

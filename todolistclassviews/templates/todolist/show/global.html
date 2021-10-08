@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+
+{% block name %}Öffentlich{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for item in items %}
+            {% if item.visibility == 'global' %}
+                <div class="card w-75">
+                  <div class="card-body">
+                      {% if item.user.username == request.user.username %}
+                          <div class="btn-group" role="group">
+                            <a id="btnGroupDrop1" class="card-title" data-bs-toggle="dropdown" aria-expanded="false">
+                              <h5 class="card-title">{{ item.title }}</h5>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                              <li><a class="dropdown-item" href="{% url 'deleteitem' item.id %}">Löschen</a></li>
+                              <li><a class="dropdown-item" href="{% url 'update' item.id %}">Bearbeiten</a></li>
+                              {% if item.status == True %}
+                                  <li><a class="dropdown-item" href="{% url 'complete' item.id %}">Erledigt</a></li>
+                              {% else %}
+                                  <li><a class="dropdown-item" href="{% url 'complete' item.id %}">Nicht Erledigt</a></li>
+                              {% endif %}
+                            </ul>
+                          </div>
+                      {% else %}
+                          <h5 class="card-title">{{ item.title }}</h5>
+                          <p>Ersteller:  {{ item.user.username }}</p>
+                      {% endif %}
+                      {% if item.status == True %}
+                          <p class="card-text">{{ item.description }} (Erledigt)</p>
+                      {% else %}
+                          <p class="card-text">{{ item.description }}</p>
+                      {% endif %}
+                  </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

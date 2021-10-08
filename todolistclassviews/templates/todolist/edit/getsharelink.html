@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block name %}Item URL{% endblock %}
+
+{% block content %}
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<br>
+				<a href="{% url 'share' item.token %}">http://127.0.0.1:8000/share/{{ item.token }}</a>
+				<br>
+				<a class="btn btn-outline-primary" href="{% url "hometodo"%}">Zurück</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

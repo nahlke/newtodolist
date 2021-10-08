@@ -1,0 +1,13 @@
+{% extends "index.html"%}
+{% load static %}
+
+{% block name %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <p>Sie sind schon eingelock, zur Startseite: <a href="{% url "hometodo"%}">Startseite</a></p>
+    <p>Auslogen: <a href="/logout">Ausloggen</a></p>
+{% else %}
+    <img src="{% static 'todolist/todolist.png'%}" alt="To-Do-Liste"/>
+{% endif %}
+{% endblock %}

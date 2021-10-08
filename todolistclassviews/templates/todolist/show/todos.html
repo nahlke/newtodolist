@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block name %}ToDo Gruppen{% endblock %}
+
+{% block content %}
+    <ul>
+
+        {% for todo in todos %}
+            {% if todo.user.username == request.user.username %}
+                <div class="card w-75">
+                  <div class="card-body">
+                      <div class="btn-group" role="group">
+                        <a id="btnGroupDrop1" class="card-title" data-bs-toggle="dropdown" aria-expanded="false">
+                          <h5 class="card-title">{{ todo.name }}</h5>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                          <li><a class="dropdown-item" href="{% url 'itemlist' todo.pk %}">Items</a></li>
+                          <li><a class="dropdown-item" href="{% url 'updategroup' todo.pk %}">Bearbeiten</a></li>
+                          <li><a class="dropdown-item" href="{% url 'deletegroup' todo.pk %}">Gruppe Löschen</a></li>
+                          <li><a class="dropdown-item" href="{% url 'deletegroupall' todo.pk %}">Gruppe+ToDos Löschen</a></li>
+                        </ul>
+                      </div>
+                  </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" value="ToDo Gruppe speichern">
+    </form>
+{% endblock %}

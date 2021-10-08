@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block name %}Löschen{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>Bist du dir sicher, das du die Gruppe {{ object.name }} löschen möchtest?</p>
+        <a class="btn btn-outline-primary" href="{% url "grouplist"%}">Zurück</a>
+        <input type="submit" class="btn btn-outline-danger" value="Löschen">
+    </form>
+{% endblock %}
